@@ -12,7 +12,5 @@ namespace ProniaTask.Models
         public string Subtitle { get; set; }
         [Required]
         public string ?ImgUrl {  get; set; }
-
-
     }
 }
