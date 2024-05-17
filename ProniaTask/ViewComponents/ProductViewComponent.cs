@@ -9,7 +9,7 @@ namespace ProniaTask.ViewComponents
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            await _context.Products
+            return View(await _context.Products
                 .Select(k => new GetProductVM
                 {
                     SellPrice = k.SellPrice,
@@ -19,9 +19,7 @@ namespace ProniaTask.ViewComponents
                     ImageUrl = k.ImageUrl,
                     Name = k.Name,
                     Rating = k.Raiting,
-                }).ToListAsync();
-
-            return View();
+                }).ToListAsync());
         }
     }
 }

@@ -13994,11 +13994,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\99455\\Desktop\\MVC-Tasks-main\\ProniaTask\\ProniaTask.csproj",
+      "projectUniqueName": "C:\\Users\\99455\\Desktop\\Me\\ProniaTask\\ProniaTask.csproj",
       "projectName": "ProniaTask",
-      "projectPath": "C:\\Users\\99455\\Desktop\\MVC-Tasks-main\\ProniaTask\\ProniaTask.csproj",
+      "projectPath": "C:\\Users\\99455\\Desktop\\Me\\ProniaTask\\ProniaTask.csproj",
       "packagesPath": "C:\\Users\\99455\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\99455\\Desktop\\MVC-Tasks-main\\ProniaTask\\obj\\",
+      "outputPath": "C:\\Users\\99455\\Desktop\\Me\\ProniaTask\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\99455\\AppData\\Roaming\\NuGet\\NuGet.Config",

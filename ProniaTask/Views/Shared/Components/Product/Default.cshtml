@@ -1,36 +1,48 @@
 ﻿@model IEnumerable<GetProductVM>
-    <div class="product-item-wrap row">
-        @foreach(var item in Model)
-        {
-        <div class="col-xl-3 col-md-4 col-sm-6 py-2">
-            <div class="product-item">///ll
-                <div class="product-img">
-                    <a asp-action="Detail" asp-controller="Shop" asp-root-id="@item.Id"></a>
-                    <img class="primary-img" src="~/@item.ImageUrl" alt="Product Images" />
-                    </a>
-                    <div class="product-add-action">
-                        <ul>
-                            <li class="quuickview-btn" data-bs-toggle="modal" data-bs-target="#quickModal">
-                                <a href="#" data-tippy="Quickview" data-tippy-inertia="true"
-                                    data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                                    data-tippy-theme="sharpborder">
-                                    <i class="pe-7s-look"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="cart.html" data-tippy="Add to cart" data-tippy-inertia="true"
-                                    data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"
-                                    data-tippy-theme="sharpborder">
-                                    <i class="pe-7s-cart"></i>
-                                </a>
-                            </li>
-                        </ul>
+<div class="product-item-wrap row">
+    @foreach (var item in Model)
+    {
+            <div class="col-xl-3 col-md-4 col-sm-6 py-2">
+                <div class="product-item">
+                    <div class="product-img">
+                        <a asp-action="Detail" asp-controller="Shop" asp-route-id="@item.Id">
+                            <img class="primary-img"
+                                 src="~/@item.ImageUrl"
+                                 alt="Product Images" />
+                        </a>
+                        <div class="product-add-action">
+                            <ul>
+                                <li class="quuickview-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#quickModal">
+                                    <a href="#"
+                                       data-tippy="Quickview"
+                                       data-tippy-inertia="true"
+                                       data-tippy-animation="shift-away"
+                                       data-tippy-delay="50"
+                                       data-tippy-arrow="true"
+                                       data-tippy-theme="sharpborder">
+                                        <i class="pe-7s-look"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="cart.html"
+                                       data-tippy="Add to cart"
+                                       data-tippy-inertia="true"
+                                       data-tippy-animation="shift-away"
+                                       data-tippy-delay="50"
+                                       data-tippy-arrow="true"
+                                       data-tippy-theme="sharpborder">
+                                        <i class="pe-7s-cart"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-
                     <div class="product-content">
-                        <a class="product-name" href="shop.html">American Marigold</a>
+                        <a class="product-name" href="shop.html">Butterfly Weed</a>
                         <div class="price-box pb-1">
-                            <span class="new-price">$23.45</span>
+                            <span class="new-price">$50.45</span>
                         </div>
                         <div class="rating-box">
                             <ul>
@@ -42,12 +54,7 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
-        </div>
-
-
-        }
-
-        <div></div>
+    }
+</div>
