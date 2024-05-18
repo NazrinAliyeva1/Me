@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProniaTask.Models;
 
 namespace ProniaTask.DataAccesLayer
 {
-    public class ProniaContext : DbContext
+    public class ProniaContext : IdentityDbContext
     {
         public ProniaContext(DbContextOptions options) : base(options)
         {            
@@ -14,6 +15,7 @@ namespace ProniaTask.DataAccesLayer
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<AppUser>AppUsers { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
