@@ -7,10 +7,11 @@ using ProniaTask.Extensions;
 using ProniaTask.Models;
 using ProniaTask.ViewModels.Products;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace ProniaTask.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductController(ProniaContext _context, IWebHostEnvironment _env):Controller
+    public class ProductController(ProniaContext _context, IWebHostEnvironment _env) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -26,9 +27,9 @@ namespace ProniaTask.Areas.Admin.Controllers
                     Discount = p.Discount,
                     ImageUrl = p.ImageUrl,
                     Categories = p.ProductCategories.Select(pc => pc.Category.Name).Bind(','),
-                    CreatedTime=p.CreateTime.ToString("dd, MMM, ddd"),
-                    UpdatedTime=p.UpdateTime.Year > 1 ? p.UpdateTime.ToString("dd, MMM, ddd yyyy"): ""
-                     
+                    CreatedTime = p.CreateTime.ToString("dd, MMM, ddd"),
+                    UpdatedTime = p.UpdateTime.Year > 1 ? p.UpdateTime.ToString("dd, MMM, ddd yyyy") : ""
+
                 })
                 .ToListAsync()); ;
         }
@@ -46,8 +47,8 @@ namespace ProniaTask.Areas.Admin.Controllers
             {
                 if (!data.ImageFile.IsValidType("image"))
                     ModelState.AddModelError("ImageFile", "Fayl şəkil formatında olmalıdır.");
-                if (data.ImageFile.IsValidLength(300))
-                    ModelState.AddModelError("ImageFile", "Faylın ölçüsü 200 kb-dan çox olmamalıdır.");
+                if (!data.ImageFile.IsValidLength(9000))
+                    ModelState.AddModelError("ImageFile", "Faylın ölçüsü 900 kb-dan çox olmamalıdır.");
                 //if (!ModelState.IsValid)
                 //    return View(data);
             }
@@ -62,10 +63,10 @@ namespace ProniaTask.Areas.Admin.Controllers
                     isImageValid = false;
                 }
 
-                if (!img.IsValidLength(300))
+                if (!img.IsValidLength(900))
                 {
-                    sb.Append("-" + img.FileName + "faylın ölçüsü 200kb-dan çox olmamalıdır.");
-                    //ModelState.AddModelError("ImageFiles", img.FileName + "faylın ölçüsü 200kb-dan çox olmamalıdır.");
+                    sb.Append("-" + img.FileName + "faylın ölçüsü 900kb-dan çox olmamalıdır.");
+                    //ModelState.AddModelError("ImageFiles", img.FileName + "faylın ölçüsü 900kb-dan çox olmamalıdır.");
                     isImageValid = false;
                 }
 
@@ -91,7 +92,7 @@ namespace ProniaTask.Areas.Admin.Controllers
             {
                 Name = data.Name,
                 CostPrice = data.CostPrice,
-                CreateTime= DateTime.Now,
+                CreateTime = DateTime.Now,
                 SellPrice = data.SellPrice,
                 StockCount = data.StockCount,
                 Raiting = data.Raiting,
@@ -99,12 +100,12 @@ namespace ProniaTask.Areas.Admin.Controllers
                 ImageUrl = Path.Combine("imgs", "products", fileName),
                 isDeleted = false,
                 ProductImages = new List<ProductImage>(),
-                ProductCategories=  data.CategoryIds.Select(x=>new ProductCategory
+                ProductCategories = data.CategoryIds.Select(x => new ProductCategory
                 {
                     CategoryId = x
                 }).ToList()
             };
-            foreach(var img in data.ImageFiles)
+            foreach (var img in data.ImageFiles)
             {
                 string imgName = await img.SaveFileAsync(Path.Combine(_env.WebRootPath, "imgs", "products"));
                 prod.ProductImages.Add(new ProductImage
@@ -118,5 +119,38 @@ namespace ProniaTask.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        //public async Task<IActionResult> Update(int? id)
+        //{
+        //    string fileName = await data.ImageFile.SaveFileAsync(Path.Combine(_env.WebRootPath, "imgs", "products"));
+        //    if (id == null || id < 1) return BadRequest();
+        //    Product product = await _context.Products.FirstOrDefaultAsync();
+        //    if (product is null) return NotFound();
+        //    UpdateProductVM productVM = new UpdateProductVM
+        //    {
+        //        Discount = product.Discount,
+        //        ImageUrl = Path.Combine("imgs", "products", fileName)
+        //        SellPrice = product.SellPrice,
+        //        Name = product.Name,
+        //        Rating = product.Raiting,
+        //        Categories = await _context.Categories.ToListAsync(),
+
+
+
+        //    };
+        //    return View(productVM);
+        //}
+        
+        //public async Task<IActionResult> Update(int? id, UpdateProductVM productVM)
+        //{
+        //    if (id == null || id < 1) return BadRequest();
+        //    Product existed = await _context.Products.FirstOrDefaultAsync();
+        //    existed.Discount = productVM.Discount;
+        //    existed.ImageUrl = productVM.ImageUrl;
+        //    existed.SellPrice = productVM.SellPrice;
+        //    existed.SellPrice= productVM.SellPrice;
+        //    existed.ProductCategories = productVM.ProductCategories.Category.Name;
+
+
+        //}
     }
 }

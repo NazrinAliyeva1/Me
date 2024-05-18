@@ -69,7 +69,7 @@ public class SliderController(ProniaContext _context) : Controller
     public async Task<IActionResult> Update(int? id, UpdateSliderVM sliderVM)
     {
         if (id == null || id < 1) return BadRequest();
-        Slider existed = await _context.Sliders.FirstOrDefaultAsync(); ;
+        Slider existed = await _context.Sliders.FirstOrDefaultAsync(); 
         existed.Title = sliderVM.Title;
         existed.Subtitle = sliderVM.Subtitle;
         existed.ImgUrl = sliderVM.ImgUrl;

@@ -12,10 +12,25 @@ namespace ProniaTask.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page =0)
         {
-            var products = await _context.Products.ToListAsync(); 
-            return View(products);
+            //ViewBag.MaxPage = Math.Ceiling((double)(await _context.Products.CountAsync() / 3));
+            //var products = await _context.Products.Skip(3).Take(3).ToListAsync();
+            //return View(products);
+
+           double max = await _context.Products.CountAsync();
+           ViewBag.MaxPage = Math.Ceiling((double)max/3);
+
+           var products = await _context.Products.Skip(3* page).Take(3).ToListAsync();
+           return View(products);
         }
     }
 }
+
+
+
+
+
+
+
+

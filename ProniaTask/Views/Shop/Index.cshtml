@@ -205,10 +205,8 @@
                         <div class="product-item">
                           <div class="product-img">
                             <a href="single-product-variable.html">
-                                  <img class="primary-img" src="~/@product.ImageUrl"
-                                alt="Product Images" />
-                                  <img class="secondary-img" src="~/@product.ImageUrl"
-                                alt="Product Images" />
+                              <img class="primary-img" src="~/@product.ImageUrl" alt="Product Images" />
+                              <img class="secondary-img" src="~/@product.ImageUrl" alt="Product Images" />
                             </a>
                             <div class="product-add-action">
                               <ul>
@@ -237,9 +235,9 @@
                             </div>
                           </div>
                           <div class="product-content">
-                            <a class="product-name" href="single-product-variable.html">American Marigold</a>
+                            <a class="product-name" href="single-product-variable.html">@product.Name</a>
                             <div class="price-box pb-1">
-                              <span class="new-price">$23.45</span>
+                              <span class="new-price">@product.SellPrice</span>
                             </div>
                             <div class="rating-box">
                               <ul>
@@ -973,18 +971,15 @@
             <div class="pagination-area">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">&raquo;</a>
-                  </li>
+                                @for (int i = 1; i <= ViewBag.MaxPage; i++)
+                                {
+                                    <li class="page-item active">
+                        <a class="page-link" asp-action="index" asp-route-page="@(i-1)">@i</a>
+                        </li>
+                                }
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next">&raquo;</a>
+                    </li>
                 </ul>
               </nav>
             </div>
