@@ -20,6 +20,7 @@ namespace ProniaTask.Controllers
 
            double max = await _context.Products.CountAsync();
            ViewBag.MaxPage = Math.Ceiling((double)max/3);
+           ViewBag.CurrentPage = page + 1;
 
            var products = await _context.Products.Skip(3* page).Take(3).ToListAsync();
            return View(products);

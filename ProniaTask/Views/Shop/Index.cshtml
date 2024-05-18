@@ -973,13 +973,17 @@
                 <ul class="pagination justify-content-center">
                                 @for (int i = 1; i <= ViewBag.MaxPage; i++)
                                 {
-                                    <li class="page-item active">
+                                    <li class="page-item @(i==ViewBag.CurrentPage? "active" : "")">
                         <a class="page-link" asp-action="index" asp-route-page="@(i-1)">@i</a>
                         </li>
                                 }
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">&raquo;</a>
-                    </li>
+                                @if(ViewBag.CurrenPage != ViewBag.MaxPage)
+                                {
+                                <li class="page-item">
+                          <a class="page-link" asp-action="index" asp-route-page="@(ViewBag.CurrentPage)" aria-label="Next">&raquo;</a>
+                    </li>                                    
+                                }
+
                 </ul>
               </nav>
             </div>
