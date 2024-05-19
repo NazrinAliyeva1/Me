@@ -34,5 +34,9 @@ namespace ProniaTask.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
     }
 }
