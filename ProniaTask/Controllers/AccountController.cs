@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ProniaTask.DataAccesLayer;
 using ProniaTask.Models;
 using ProniaTask.ViewModels.Account;
 
@@ -49,17 +50,14 @@ namespace ProniaTask.Controllers
                 if(user == null)
                 {
                     ModelState.AddModelError("", "Istifadəçi tapılmadı.");
+                    return View(vm);
                 }
-            }
-            if(!await _userManager.CheckPasswordAsync(user, vm.Password))
-            {
-                ModelState.AddModelError("", "İstifadəçi adı və ya şifrəsi yanlışdır." + user.LockoutEnd.Value.ToString("HH:mm:ss"));
-                return View(vm);
             }
             var result = await _signInManager.CheckPasswordSignInAsync(user, vm.Password, true);
             if (result.IsLockedOut)
             {
-                ModelState.AddModelError("", "Çox sayda yanlış dəyər göndərdiniz. Zəhmət olmasa gözləyin.");
+                ModelState.AddModelError("", "Çox sayda yanlış dəyər göndərdiniz. Zəhmət olmasa gözləyin." + user.LockoutEnd.Value.AddHours(4).ToString("HH:mm:ss"));
+                return View(vm);
             }
 
             return RedirectToAction("Index", "Home");

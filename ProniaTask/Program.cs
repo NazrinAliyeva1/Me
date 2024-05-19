@@ -15,6 +15,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt=>
     opt.Password.RequireDigit = false;
     opt.Password.RequireLowercase = false;
     opt.Password.RequireUppercase = false;
+    opt.Lockout.MaxFailedAccessAttempts = 2;
 }
 ).AddEntityFrameworkStores<ProniaContext>()
 .AddDefaultTokenProviders();
