@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProniaTask.DataAccesLayer;
@@ -8,6 +9,7 @@ using ProniaTask.ViewModels.Products;
 namespace ProniaTask.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CategoryController(ProniaContext _sql) : Controller
     {
         // GET: HomeController

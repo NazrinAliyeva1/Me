@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProniaTask.DataAccesLayer;
@@ -27,6 +28,7 @@ public class SliderController(ProniaContext _context) : Controller
         return View(data);
     }
     [HttpGet]
+    [Authorize]
     public IActionResult Create()
     {
         return View();

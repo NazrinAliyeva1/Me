@@ -21,8 +21,11 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt=>
 .AddDefaultTokenProviders();
 
 var app = builder.Build();
-
+app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
 app.MapControllerRoute("areas", "{area:exists}/{controller=Slider}/{action=Index}/{id?}");
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 app.Run();

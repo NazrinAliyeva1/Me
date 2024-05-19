@@ -53,7 +53,8 @@ namespace ProniaTask.Controllers
                     return View(vm);
                 }
             }
-            var result = await _signInManager.CheckPasswordSignInAsync(user, vm.Password, true);
+            await _signInManager.CheckPasswordSignInAsync(user, vm.Password, true);
+            var result = await _signInManager.PasswordSignInAsync(user, vm.Password, vm.RememberMe, true);
             if (result.IsLockedOut)
             {
                 ModelState.AddModelError("", "Çox sayda yanlış dəyər göndərdiniz. Zəhmət olmasa gözləyin." + user.LockoutEnd.Value.AddHours(4).ToString("HH:mm:ss"));
@@ -61,6 +62,11 @@ namespace ProniaTask.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
         }
     }
 }

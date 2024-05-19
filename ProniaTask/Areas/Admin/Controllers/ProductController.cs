@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
@@ -11,6 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace ProniaTask.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ProductController(ProniaContext _context, IWebHostEnvironment _env) : Controller
     {
         public async Task<IActionResult> Index()
