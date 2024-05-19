@@ -21,15 +21,18 @@ namespace ProniaTask.DataAccesLayer
         {
             foreach(var entry in ChangeTracker.Entries())
             {
-                switch (entry.State)
+                if(entry.Entity is BaseEntity entity)
                 {
-                    case EntityState.Added:
-                        ((BaseEntity)entry.Entity).CreateTime= DateTime.Now;
-                        ((BaseEntity)entry.Entity).isDeleted = false;
-                        break;
-                    case EntityState.Modified:
-                        ((BaseEntity)entry.Entity).UpdateTime= DateTime.Now;
-                        break;
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entity.CreateTime = DateTime.Now;
+                            entity.isDeleted = false;
+                            break;
+                        case EntityState.Modified:
+                            entity.UpdateTime = DateTime.Now;
+                            break;
+                    }
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
