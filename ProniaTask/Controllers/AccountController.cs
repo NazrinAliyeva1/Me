@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProniaTask.DataAccesLayer;
+using ProniaTask.Enums;
 using ProniaTask.Models;
 using ProniaTask.ViewModels.Account;
 
 namespace ProniaTask.Controllers
 {
-    public class AccountController(UserManager<AppUser>_userManager, SignInManager<AppUser>_signInManager) : Controller
+    public class AccountController(UserManager<AppUser>_userManager, SignInManager<AppUser>_signInManager, RoleManager<IdentityRole> _roleManager) : Controller
     {
         public IActionResult Register()
         {
@@ -33,6 +34,7 @@ namespace ProniaTask.Controllers
                 }
                 return View(vm);
             }
+            await _userManager.AddToRoleAsync(user, UserRole.Member.ToString());
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Login()
@@ -53,7 +55,7 @@ namespace ProniaTask.Controllers
                     return View(vm);
                 }
             }
-            await _signInManager.CheckPasswordSignInAsync(user, vm.Password, true);
+            //await _signInManager.CheckPasswordSignInAsync(user, vm.Password, true);
             var result = await _signInManager.PasswordSignInAsync(user, vm.Password, vm.RememberMe, true);
             if (result.IsLockedOut)
             {
@@ -67,6 +69,23 @@ namespace ProniaTask.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(Login));
+        }
+
+        public async Task<IActionResult> CreateRoles()
+        {
+            foreach(UserRole role in Enum.GetValues(typeof(UserRole)))
+            {
+                if (! await _roleManager.RoleExistsAsync(role.ToString()))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole
+                    {
+                        Name = role.ToString(),
+                    });
+                }
+
+            }
+            //return RedirectToAction(nameof(Index), "Home");
+            return Content("Hi");
         }
     }
 }

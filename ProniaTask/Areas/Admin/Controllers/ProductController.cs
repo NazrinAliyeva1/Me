@@ -12,9 +12,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace ProniaTask.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles ="Admin")]
+
     public class ProductController(ProniaContext _context, IWebHostEnvironment _env) : Controller
     {
+        //[Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Products
@@ -35,6 +37,8 @@ namespace ProniaTask.Areas.Admin.Controllers
                 })
                 .ToListAsync()); ;
         }
+        //[Authorize(Roles = "Admin, Moderator")]
+
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = await _context.Categories
@@ -121,6 +125,29 @@ namespace ProniaTask.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //[Authorize(Roles ="Admin")]
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || id < 1) return BadRequest();
+
+        //    Product existed = await _context.Products.Include(p => p.Images).FirstOrDefaultAsync(s => s.Id == id);
+
+        //    if (existed is null) return NotFound();
+
+        //    existed.ImageUrl.Delete(Path.Combine(_env.WebRootPath));
+        //    foreach (ProductImage img in existed.Images)
+        //    {
+        //        img.ImageUrl.Delete(Path.Combine(_env.WebRootPath));
+        //    }
+        //    _context.Products.Remove(existed);
+        //    await _context.SaveChangesAsync();
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+
+
         //public async Task<IActionResult> Update(int? id)
         //{
         //    string fileName = await data.ImageFile.SaveFileAsync(Path.Combine(_env.WebRootPath, "imgs", "products"));
@@ -141,7 +168,7 @@ namespace ProniaTask.Areas.Admin.Controllers
         //    };
         //    return View(productVM);
         //}
-        
+
         //public async Task<IActionResult> Update(int? id, UpdateProductVM productVM)
         //{
         //    if (id == null || id < 1) return BadRequest();
