@@ -5,7 +5,7 @@ using ProniaTask.ViewModels.Account;
 
 namespace ProniaTask.Controllers
 {
-    public class AccountController(UserManager<AppUser>_userManager) : Controller
+    public class AccountController(UserManager<AppUser>_userManager, SignInManager<AppUser>_signInManager) : Controller
     {
         public IActionResult Register()
         {
@@ -34,9 +34,35 @@ namespace ProniaTask.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM vm)
+        {
+            if(!ModelState.IsValid)return View(vm);
+            AppUser? user = await _userManager.FindByNameAsync(vm.UserNameorEmail);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(vm.UserNameorEmail);
+                if(user == null)
+                {
+                    ModelState.AddModelError("", "Istifadəçi tapılmadı.");
+                }
+            }
+            if(!await _userManager.CheckPasswordAsync(user, vm.Password))
+            {
+                ModelState.AddModelError("", "İstifadəçi adı və ya şifrəsi yanlışdır." + user.LockoutEnd.Value.ToString("HH:mm:ss"));
+                return View(vm);
+            }
+            var result = await _signInManager.CheckPasswordSignInAsync(user, vm.Password, true);
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError("", "Çox sayda yanlış dəyər göndərdiniz. Zəhmət olmasa gözləyin.");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

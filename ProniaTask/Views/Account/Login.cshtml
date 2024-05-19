@@ -38,10 +38,10 @@
                                         <label asp-for="Password" class="form-label"></label>
                                         <input asp-for="Password" class="form-control">
                                     </div>
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                                     <div class="d-flex align-items-center justify-content-between mb-4">
                                         <div class="form-check">
                                             <input class="form-check-input primary" asp-for="RememberMe" checked>
-
                                             <label class="form-check-label text-dark" asp-for="RememberMe">
                                                 Remeber this Device
                                             </label>
